@@ -14,8 +14,9 @@
 \usepackage{multirow}
 \usepackage{subcaption}
 \usepackage{bbm}
+\usepackage{color}
 \DeclareMathOperator*{\argmax}{arg\,max}
-
+\newcommand{\ml}[1]{\textcolor{red}{ML : #1}}
 \pagestyle{fancy}
 \begin{document}
 \author{F\'elix GONTIER \\ \texttt{felix.gontier@ls2n.fr}}
@@ -24,7 +25,7 @@
 
 \section{Introduction}
 
-This report presents the results of a perceptual experiment conducted as part of the Cense project~\cite{cense}. From recordings of a sensor network with low information content, this study aims at developing a processing chain for the estimation of pleasantness in urban sound environments.
+This report presents the results of a perceptual experiment conducted as part of the Cense project~\cite{cense}. From recordings of a sensor network with low information content, this study aims at proposing a processing chain for the estimation of the pleasantness in urban sound environments.
 
 \section{Test description}
 \subsection{Objectives}
@@ -32,9 +33,9 @@ This report presents the results of a perceptual experiment conducted as part of
 
 The objectives of this test are three-fold. First, the study aims at verifying the hypothesis that recorded and equivalent replicated sound scenes result in the same perceptual response, meaning that the development of models based on simulated data for real-life scenarios is feasible.\\
 
-Very few recorded scenes are fully annotated in terms of backgrounds, event onsets-offsets and sound levels. However, the prediction of source-specific acoustic indicators through deep learning models requires large amounts of data for which the ground truth of these indicators is known. An alternative to the subjective annotation of corpora of sound scenes is the use of fully simulated scenes, where source activity is controlled. Thus, it is important to verify that new simulated scenes generate a perceptual space similar to that of real scenarios, even with low source complexity.\\
+Very few recorded scenes are fully annotated in terms of backgrounds, event onsets-offsets and sound levels. At the same time, the prediction of source-specific acoustic indicators through deep learning models requires large amounts of data for which the ground truth of these indicators is known. An alternative to the subjective annotation of corpora of sound scenes is the use of fully simulated scenes, where source activity is controlled. It is therefore important to verify that new simulated scenes generate a perceptual space similar to that of real scenarios, even with low source complexity.\\
 
-Finally, this work aims at finding physical indicators useful for the estimation of pleasantness. Previous studies consistently model pleasantness as a function of perceptual source activity descriptors such as the time of presence. These quantities are somewhat closer to the physical properties of the scene than the more abstract concept of pleasantness. This work thus primarily focuses on the relation of perceived source activity with physical indicators which can be predicted using deep learning architectures.
+Next, this work aims at finding physical indicators that can be considered for the estimation of pleasantness. Previous studies consistently model pleasantness as a function of perceptual source activity descriptors such as the time of presence. These quantities are somewhat closer to the physical properties of the scene than the more abstract concept of pleasantness. This work thus primarily focuses on the relation of perceived source activity with physical indicators which can be predicted using deep learning architectures.
 
 
 \subsection{Data}
@@ -45,10 +46,10 @@ The first objective requires the comparison of perceptual assessments for record
 
 \begin{itemize}
 \item Background sources that are present throughout the whole scene, and are associated with a sound level.
-\item Events characterized for each occurence by their source type, onset-offset and event-to-background ratio (EBR) in dB.
+\item Events characterized for each occurrence by their source type, onset-offset and event-to-background ratio (EBR) in dB.
 \end{itemize}
 
-The 19 scenes are then replicated using simScene~\cite{simscene} with a database of extracts from recordings of isolated sound sources. This database is constructed from part of the LibriSpeech~\cite{libri} corpus for voices and Freesound (NOTE?) contributions for all other sources. For this experiment, the playback sound level is the same as during recordings, and ranges from 63.9~dB to 79.4~dB.\\
+The 19 scenes are then replicated using simScene~\cite{simscene} with a database of extracts from recordings of isolated sound sources. This database is constructed from part of the LibriSpeech~\cite{libri} corpus for voices and Freesound\footnote{\url{https://freesound.org}} contributions for all other sources. For this experiment, the playback sound level is the same as during recordings \ml{of the references scenes ?}, and ranges from 63.9~dB to 79.4~dB.\\
 
 \begin{figure}[!h]
     \centering
@@ -56,17 +57,15 @@ The 19 scenes are then replicated using simScene~\cite{simscene} with a database
     \caption{Estimated time of presence space for simulated scenes.}\label{fig:tvb_pres}
 \end{figure}
 
-To study the perceptual properties of simulated scenes, the corpus is extended with 75 simulated scenes from new scenarios. Because of the lack of large isolated sources datasets and the previously proposed models of pleasantness, we choose to restrict the scene composition to 3 sources: \textit{traffic}, \textit{human voices} and \textit{birds}. Considering the aim of the study, newly generated scenarios should cover most encounterable real-life situations while remaining perceptually plausible. Thus, statistics on background and event properties are extracted for each of the three sources from annotations presented in~\cite{jrg}. These statistics include, conditionally to the ambiance:
+To study the perceptual properties of simulated scenes, the corpus is extended with 75 simulated scenes from new scenarios. Because of the lack of large isolated sources datasets, we choose to restrict the scene composition to 3 sources: \textit{traffic}, \textit{human voices} and \textit{birds}. Considering the aim of the study, newly generated scenarios should cover most real-life situations while remaining perceptually plausible. Thus, statistics on background and event properties are extracted for each of the three sources from annotations presented in~\cite{jrg}. These statistics include, conditionally to the ambiance:
 \begin{itemize}
 \item The probability of appearance of a given source in the scene, for which events and backgrounds are considered separately,
 \item Event-to-background ratios in dB for all events and backgrounds besides the first, in the form of normal distributions,
-\item The inter-onset of event occurences in seconds, also in the form of normal distributions.
+\item The inter-onset of event occurrences in seconds, also in the form of normal distributions.
 \end{itemize}
-Adjustments are made on the variance of the considered properties to better cover possible scenarios, and voice events EBR, mostly read English recordings, are reduced to enhance realism. An additional \textit{place} ambiance is added with properties derived empirically from available data. For each environment diverse new scenarios are generated by sampling the background and event properties distributions. For each scene the time of presence for the three sources is estimated using indicators proposed in~\cite{gontier}, and 75 scenes are chosen to maximize pairwise distance in the resulting 3-dimensional space. This is shown in Figure~\ref{fig:tvb_pres}. The playback sound level is also conditioned on the ambiance according to Figure~\ref{fig:amb_levels}, and ranges from 46.6~dB to 77.1~dB.\\
+Adjustments are made on the variance of the considered properties to better cover possible scenarios, and voice events EBR, mostly read English recordings, are reduced to improve realism. An additional \textit{place} ambiance is added with properties derived empirically from available data. For each environment diverse new scenarios are generated by sampling the background and event properties distributions. For each scene the time of presence for the three sources is estimated using indicators proposed in~\cite{gontier}, and 75 scenes are chosen to maximize pairwise distance in the resulting 3-dimensional space. This is shown in Figure~\ref{fig:tvb_pres}. The playback sound level is also conditioned on the ambiance according to Figure~\ref{fig:amb_levels}, and ranges from 46.6~dB to 77.1~dB.\\
 
-The experiment corpus is thus comprised of a total of 100 scenes.
-
-
+The experiment corpus totals 100 scenes.
 
 \begin{figure}[!h]
     \centering
@@ -77,7 +76,7 @@ The experiment corpus is thus comprised of a total of 100 scenes.
 
 \subsection{Questions}
 
-Test participants are asked to answer 9 questions per sound scene in the form of 11 point (0-10) scales. They are presented in french and translated in this report. The first 5 scales relate to general properties of the scene:
+Test participants are asked to answer 9 questions per sound scene in the form of 11 point (0-10) scales. They are presented in french and translated in this report using standard terminology. The first 5 scales relate to general properties of the scene:
 \begin{itemize}
 \item Pleasantness (\textit{Unpleasant - Pleasant}) - P
 \item Liveliness (\textit{Inert, amorphous - Lively, eventful}) - L
@@ -101,17 +100,17 @@ The corresponding interface is shown in Figure~\ref{fig:interface}.
 
 \subsection{Test conditions}
 
-Prior to the test, participants are given an introduction and shown the interface before the test to ensure that the quantities are understood. Although the corpus is comprised of 100 sound scenes, participants only evaluate 50 scenes: all listen to the 6 recorded and 19 simulated, then to 25 of the 75 simulated. The evaluated simulated scenes are chosen so that each scene is evaluated by the same number of participants. A random pre-generated order is used to attenuate ordering effects, although all participants are first presented with the most quiet then most noisy of the recorded scenes to calibrate their answers. For the remainder of the corpus all participants experience different scene ordering. Participants can only listen to each scene once. They can start answering questions before the end of the sample, but have to answer all questions and listen to the full extract before proceeding to the next.\\
+Prior to the test, participants are given a short verbal introduction and the interface is introduced before the test to ensure that the quantities are well understood. Although the corpus is comprised of 100 sound scenes, participants only evaluate 50 scenes: all listen to the 6 recorded and 19 simulated, then to 25 of the 75 simulated. The evaluated simulated scenes are chosen so that each scene is evaluated by the same number of participants. A random pre-generated order is used to attenuate ordering effects, although all participants are first presented with the most quiet then most noisy of the recorded scenes to calibrate their answers. For the remainder of the corpus all participants experience different scene ordering. Participants can only listen to each scene once. They can start answering questions before the end of the sample, but have to answer all questions and listen to the full extract before proceeding to the next.\\
 
 The scenes are played at a given sound level as discussed in Section~\ref{sec:test_data}, through the same computer and sound card configurations. Beyerdynamics DT-990 Pro headphones are used for all participants. These headphones are calibrated in a semi-anechoic chamber, resulting in a relation between playback Leq and LAeq and sound card output voltage for pink noise. This ensures that correctly scaled scenes will be heard at the desired sound level for all participants.\\
 
 A total of 23 students at Ecole Centrale de Nantes completed the test.
-		
+
 \section{Perceptual analysis}
 
 This section studies the test results with regard to the objectives presented in Section~\ref{sec:test_obj}.\\
 
-Participants evaluate each scene on criteria coded on discrete scales. Many statistical tools assume that the studied data follows continuous, single mode distributions. It is thus important to first verify that no distinct groups of participants can be obtained from perceptual assessments. A hierarchical clustering analysis of the participants is performed for the 25 scenes in the commonly evaluated sub-corpus, and shown in Figure~\ref{fig:hclusters}. No clear separation into groups is found, as a result the assessment distributions are assumed to be single-mode and their means can be used for further analysis.
+Participants evaluate each scene on criteria coded on a discrete scales \ml{how many steps ?}. Many statistical tools assume that the studied data follows continuous, single mode distributions. It is thus important to first verify that no distinct groups of participants can be obtained from perceptual assessments. A hierarchical clustering analysis of the participants is performed for the 25 scenes in the commonly evaluated sub-corpus, and shown in Figure~\ref{fig:hclusters}. No clear separation into groups is found, as a result the assessment distributions are assumed to be single-mode and their means can be used for further analysis.
 
 \begin{figure}[!h]
     \centering
@@ -119,16 +118,14 @@ Participants evaluate each scene on criteria coded on discrete scales. Many stat
     \caption{Dendrogram of the hierarchical clustering of participants on the first 25 scenes of the test. No distinct groups are visible.}\label{fig:hclusters}
 \end{figure}
 
-\subsection{Correspondance between recorded and replicated scenes}
+\subsection{Correspondence between recorded and replicated scenes}
 
+The relevance of the remaining study relies on the perceptual equivalence of recorded and synthetic scenes. To verify this hypothesis, the 6 recorded and corresponding replicated scenes are compared in terms of perceptual responses.\\
 
-The relevance of the study relies on the perceptual equivalence of recorded and synthetic scenes. To verify this hypothesis, the 6 recorded and corresponding replicated scenes are compared in terms of perceptual responses.\\
+Table~\ref{tab:ogrep} shows the mean differences between assessments for the recorded and corresponding replicated scenes. Kolmogorov-Smirnov statistical tests are implemented for each scene and perceptual scale to outline significant differences between assessment distributions, which are shown in bold. This non parametric test is chosen because it assumes that distributions are continuous. Pleasantness is found to differ between the two groups only for one location, P4, which can be explained by high discrepancies in the perceptual time of presence of traffic and voices. For this location, the background traffic in the recorded scene varies along time, it is louder in the first half of the scene than in the second half. Replicating this scene using simScene imposes a constant sound level for background sources. Thus, the background traffic is louder in the replicated scene than it is in the recording for about half
+of its duration. To a lesser extent the same issue explains the large difference in assessed time of presence of voices in the location P3, \ml{trop long : but as voices have a less distinct influence on pleasantness this is not reflected directly}. Differences can also be interpreted by the choice of isolated samples, which is semi-random and based on a high-level source taxonomy. For example, no difference is made during annotation between child or adult speech, or depending on its expressiveness.\\
 
-Table~\ref{tab:ogrep} shows the mean differences between assessments for the recorded and corresponding replicated scenes. Kolmogorov-Smirnov statistical tests are implemented for each scene and perceptual scale to outline significant differences between assessment distributions, which are shown in bold. This particular test is chosen because while it assumes that distributions are continuous, it is non-parametric. Pleasantness is found to differ between the two groups only for one location, P4, which is explained by high discrepancies in the perceptual time of presence of traffic and voices. For this location, the background traffic in the recorded scene varies along time, it is louder in the first half of the scene than in the second half. Replicating this scene using simScene imposes a constant sound level for background sources. Thus, the background traffic is significantly louder in the replicated scene than it is in the recording for about half
-of its duration. Although to a lesser extent the same issue explains the high difference in assessed time of presence of voices in the location P3, but as voices have a less distinct influence on pleasantness this is not reflected directly. Differences can also be interpreted by the choice of isolated samples, which is semi-random and based on a high-level source taxonomy. For example no difference is made during annotation between child or adult speech, or depending on its expressiveness.\\
-
-Overall, most perceptual responses for replicated scenes are close to those for recordings. No major difference is consistently found in a particular scale, and the proposed hypothesis cannot be invalidated.
-
+Overall, most perceptual responses for replicated scenes are close to those for recordings. No major difference is found in a particular scale, and the proposed hypothesis, \ml{that is that ...} cannot be invalidated.
 
 \begin{table}[h]
 \centering
@@ -152,9 +149,9 @@ Overall, most perceptual responses for replicated scenes are close to those for 
 
 \subsection{Perceptual space}
 
-The perceptual space generated by the five general scales can also be studied and compared to previous studies to further validate the test material. It is obtained by performing a principal components analysis (PCA) on the corresponding perceptual responses at the scene level. Figure~\ref{fig:pspace} compares the results for scenes based on recordings (left, n=25) and new scenarios (right, n=75). The generated spaces are similar, with only overall loudness and pleasantness axes slightly rotated between the two corpora. For both sets the variance explained by the first two components is similar (resp. 79.4\% - 18.1\% and 79.6\% - 15.2\%). Furthermore, these representations are comparable to those found in previous work on perceptual dimensions~\cite{axelsson}. Thus, the use of simulated scenes based on both real and new scenarios does not result in major differences in the relations between perceptual quantities. This confirms that the simulation process generates perceptually realist scenes and can be used for further research.\\
+The perceptual space generated by the five general scales can also be studied and compared to previous studies to further validate the test material. It is obtained by performing a principal components analysis (PCA) on the corresponding perceptual responses at the scene level. Figure~\ref{fig:pspace} compares the results for scenes based on recordings (left, n=25) and new scenarios (right, n=75). The generated spaces are similar, with only overall loudness and pleasantness axes slightly rotated between the two corpora. For both sets the variance explained by the first two components is similar (resp. 79.4\% - 18.1\% and 79.6\% - 15.2\%). Furthermore, these representations are comparable to those found in previous work on perceptual dimensions~\cite{axelsson}. Thus, the use of simulated scenes based on both real and new scenarios does not result in major differences in the relations between perceptual quantities. This confirms that the simulation process generates perceptually convincing scenes and can be used for further research.\\
 
-Additionally, assessments for each scene are projected onto the PCA space and represented in Figure~\ref{fig:pspace} as dots. Discrepancies between projections of original and replicated scenes are highlighted in Figure~\ref{fig:pspace}a by black segments. The space covered by scenes based on new scenarios covers that of the studied real-life environments, demonstrating the efficiency of the scene generation procedure in terms of diversity. 
+Additionally, assessments for each scene are projected onto the PCA space and represented in Figure~\ref{fig:pspace} as dots. Discrepancies between projections of original and replicated scenes are highlighted in Figure~\ref{fig:pspace}a by black segments. The space covered by scenes based on new scenarios covers that of the studied real-life environments, demonstrating the efficiency of the scene generation procedure in terms of diversity.
 
 % FIGURE
 \begin{figure}[h]
@@ -196,7 +193,7 @@ Additionally, assessments for each scene are projected onto the PCA space and re
 %}
 \end{table}
 
-Finally, we study the relations between perceptual scales with respect to existing work. Table~\ref{tab:percc} shows the Pearson's correlation coefficients at the scene level, that is on the mean responses for each scene. The resulting values are consistent with the literature~\cite{aumond, lavandier}, both between general scales as discussed in the previous section and for the relations to source contributions. Pleasantness (P) is mainly influenced negatively by overall loudness and traffic and positively by birds. In previous studies a small positive contribution of voices to pleasantness was found, while here no direct relation is visible. This can be explained by the choice of speech samples used during generation, which consist of read audiobooks extracts and thus may sound unnatural in the considered urban environments. Liveliness (L) is here negatively though weakly (r<0.4) correlated with the presence of birds, while no significant relation was found in previous studies.\\
+We then study the relations between perceptual scales with respect to existing work. Table~\ref{tab:percc} shows the Pearson's correlation coefficients at the scene level, that is on the mean responses for each scene. The resulting values are consistent with the literature~\cite{aumond, lavandier}, both between general scales as discussed in the previous section and for the relations to source contributions. Pleasantness (P) is mainly influenced negatively by overall loudness and traffic and positively by birds. In previous studies a small positive contribution of voices to pleasantness was found, while no direct relation is visible from the data gathered. This can be explained by the choice of speech samples used during generation, which consist of read audiobooks extracts and thus may sound unnatural in the considered urban environments. Liveliness (L) is here negatively though weakly (r<0.4) correlated with the presence of birds, while no significant relation was found in previous studies.\\
 
 Relations between source-specific parameters are also weak with the exception of traffic being negatively correlated with birds. The perceptual assessment of the sound level of passing vehicles $L_{T, p}$ is a potential alternative to that of the time of presence of traffic $T_{T, p}$. Except for the interest (I) it displays higher correlations with general scales and lower correlations with other source-specific parameters.\\
 
@@ -209,13 +206,13 @@ The best resulting models with statistically significant estimates ($p<0.05$ for
 \hat P_{p2} &= 8.99 - 0.67~OL - 0.15~T_{T, p} + 0.08~T_{V, p} + 0.12~T_{B, p}
 \end{align}
 
-Both models have very similar expressions, and are comparable to the relation proposed in~\cite{ricciardi2014}, of expression (translated from 1-11 scales to 0-10):
+Both models have very similar formal expressions, and are comparable to the relation proposed in~\cite{ricciardi2014}, of expression (translated from 1-11 scales to 0-10):
 \begin{equation}
 \hat P_{p3} = 7.11 - 0.38~OL - 0.15~T_{T, p} + 0.20~T_{V, p} + 0.15~T_{B, p}
-\end{equation}
-although in the considered corpus the overall loudness and presence of voices have respectively a higher and lower impact on pleasantness. This is expected given the observed differences in correlations values.\\
+\end{equation}.
+Though, in the considered corpus the overall loudness and presence of voices have respectively a higher and lower impact on pleasantness. This is expected given the observed differences in correlations values.\\
 
-Table~\ref{tab:percm} summarizes the performance of the three models. Again, the two models computed on the present corpus display similar, low estimation errors as well as no significant difference in adjusted $R^2$ and correlation to assessed pleasantness. In contrast, the model proposed in~\cite{ricciardi2014} results in higher prediction errors, along with less data variance explained by the model. However, this model was developed on a large corpus comprised of more than 3400 sound scenes and still shows acceptable performance for this new corpus.  
+Table~\ref{tab:percm} summarizes the performance of the three models. Again, the two models computed on the present corpus display similar, low estimation errors as well as no significant difference in adjusted $R^2$ and correlation to assessed pleasantness. In contrast, the model proposed in~\cite{ricciardi2014} results in higher prediction errors, along with less data variance explained by the model. However, this model was developed on a large corpus comprised of more than 3400 sound scenes and still shows acceptable performance for this new corpus.
 
 \begin{table}[t]
 \centering
@@ -234,13 +231,13 @@ Table~\ref{tab:percm} summarizes the performance of the three models. Again, the
 
 \section{Physical analysis}
 
-From results obtained in the previous section, a perceptual model is assumed where pleasantness is a function of the perceived overall loudness and time of presence of traffic, voices and birds. These parameters are not easily predictable from recordings because of their subjectivity. Thus, there is a need to propose a similar model of pleasantness from physically-based indicators that can either 1) be computed directly from the audio signal, or 2) be predicted using a learned parametric model taking as input the audio signal.
+From results obtained in the previous section, a perceptual model is chosen where pleasantness is a function of the perceived overall loudness and time of presence of traffic, voices and birds. These parameters are not easily predictable from recordings because of their subjectivity. Thus, there is a need to propose a model of pleasantness whose parameters can be estimated from physically-based indicators that can either 1) be computed directly from the audio signal, or 2) be predicted using a learned parametric model taking as input the audio signal.
 
 \subsection{Indicators}
 
 Several indicators are computed from the audio signals that are found in previous studies~\cite{aumond, gontier, lavandier} to correlate well with content-related perceptual parameters: the overall loudness and the source-specific time of presence.\\
 
-First, indicators can be computed directly from the mixed audio, without needing information about its composition. Typically this includes indicators derived from sound level measurements. For this study the following are computed with 125~ms (fast) measurements using the Matlab ITA-toolbox~\cite{ita}:
+First, indicators can be computed directly from the mixed audio, without the need for information about the composition of the scene, \textit{i.e.} when the source are active and at which level. Typically this includes indicators derived from sound level measurements. For this study the following are computed with 125~ms (fast) measurements using the Matlab ITA-toolbox~\cite{ita}:
 
 \begin{itemize}
 \item Z-weighted $L_{eq}$ and A-weighted $LA_{eq}$ equivalent sound levels in dB and dBA respectively.
@@ -257,14 +254,14 @@ Furthermore, the simulation process outputs ground truth source contributions in
 \item $\Delta L_{s}$: Source emergence, taken as the difference between the equivalent sound level of source $s$ and that of all other sources combined
 \end{itemize}
 
-Finally, the $\hat T_s(\alpha)$ and $\hat T_s(\alpha, \beta)$ time of presence approximations proposed in~\cite{gontier} are computed. $\hat T_s(\alpha)$ is based on a binary emergence model using the full-band source emergence $\Delta_s(t) = L_s(t) - L_{\bar{s}}(t)$ and a threshold $\alpha$ optimized on the present dataset:
+Next, the $\hat T_s(\alpha)$ and $\hat T_s(\alpha, \beta)$ time of presence approximations proposed in~\cite{gontier} are computed. $\hat T_s(\alpha)$ is based on a binary emergence model using the full-band source emergence $\Delta_s(t) = L_s(t) - L_{\bar{s}}(t)$ and a threshold $\alpha$ optimized on the present dataset:
 
 \begin{align}
 \hat T_s(\alpha) &= \frac{1}{N_t}\sum_{t = 1}^{N_t}\mathbbm{1}_{\Delta_s(t)>\alpha}\\
 \alpha_{opt} &= \argmax_{\alpha}\frac{1}{N_s}\sum_{s = 1}^{N_s}r\left(T_{s, p}, T_s(\alpha)\right)
 \end{align}
 
-where $r$ is the Pearson's correlation coefficient, $s$ denotes the sound source, $t$ is the time frame and $T_{s, p}$ correspond to the perceptual time of presence assessments. While this indicator has a simple expression, it does not reflect well the properties of auditory masking resulting in a low optimal threshold $\alpha_{opt} = -19dB$.\\
+where $r$ is the Pearson's correlation coefficient, $s$ denotes the sound source, $t$ is the time frame and $T_{s, p}$ correspond to the perceptual time of presence assessments. While this indicator has a simple expression, it is not found to reflect well the properties of auditory masking resulting in a low optimal threshold $\alpha_{opt} = -19dB$.\\
 
 Similarly, $\hat T_s(\alpha, \beta)$ is based on a binary source emergence model, but is computed on the third-octave band emergence $\Delta_s(t, f) = L_s(t, f) - L_{\bar{s}}(t, f)$ as a simple spectral masking model. It is parametrized by $\alpha$ and $\beta$ thresholds:
 
@@ -282,9 +279,9 @@ In the remainder of this report, the subscript $s$ is replaced with the correspo
 
 Analysis is done using the arithmetic mean of subjective assessments over all participants for replicated and simulated scenes. Two scenes containing only one source are also excluded for implementation concerns, resulting in $n=92$ scenes.\\
 
-Table~\ref{tab:physc} shows the Pearson's correlation coefficients between computed physical indicators and perceptual assessments. First, all measurements of global sound levels correlate well (r>0.9) with the perceived overall loudness. Although any could be used, the $L_{50}$ appears to be best suited for pleasantness prediction in this study.\\
+Table~\ref{tab:physc} shows the Pearson's correlation coefficients between computed physical indicators and perceptual assessments. First, all measurements of global sound levels correlate well (r>0.9) with the perceived overall loudness. Although any could be used, the $L_{50}$ appears to be best suited for pleasantness prediction in this study \ml{because ??}.\\
 
-Regarding source-specific perceptual parameters, the $L_{eq, s}$ correlates consistently well with the $T_{s, p}$ of corresponding source. Conversely, the emergence $\Delta L_s$ fails to represent the perceived bird activity, and correlations are weaker for other sources. Both proposed estimates of the time of presence $\hat T_s(\alpha)$ and $\hat T_s(\alpha, \beta)$ show strong relations to their perceptual counterparts with high correlations (r>0.8), though the latter is consistently better. An interesting result is the high correlation between the $L_{10}$ which is interpreted as a measurement of emergent events to the perceived sound level of passing vehicles $L_{T, p}$. If in perceptual models there is a need to include the sound level of traffic events, the $L_{10}$ may be sufficient instead of a source separation and level estimation algorithm.\\
+Regarding source-specific perceptual parameters, the $L_{eq, s}$ correlates consistently well with the $T_{s, p}$ of corresponding source. Conversely, the emergence $\Delta L_s$ fails to represent the perceived bird activity, and correlations are weaker for other sources. Both proposed estimates of the time of presence $\hat T_s(\alpha)$ and $\hat T_s(\alpha, \beta)$ show strong relations to their perceptual counterparts with high correlations (r>0.8), though the latter is consistently better. An interesting result is the large correlation between the $L_{10}$ which is interpreted as a measurement of emergent events to the perceived sound level of passing vehicles $L_{T, p}$. In perceptual models there may be a need to include the sound level of traffic events. In this case, the $L_{10}$ may be sufficient instead of a source separation and level estimation algorithm.\\
 
 
 \begin{table}
@@ -341,7 +338,7 @@ Substituting these equations in equation (3), the pleasantness model becomes:
 \hat P_{\varphi 2} = 10.95 - 0.08~L_{50} - 0.99~\hat T_{T}(\alpha, \beta) + 1.26~\hat T_{V}(\alpha, \beta) + 1.05~\hat T_{B}(\alpha, \beta)
 \end{equation}
 
-Table~\ref{tab:physm} compares the performance of the two models. Both obtain good estimates of pleasantness for a 10-point scale. Again, the $\hat P_{\varphi 1}$ model optimized on this experiment's data is expectedly better, though less likely to generalize well to new scenes due to its contruction process. It relies on the characteristics of the simulated scenes in terms of isolated samples variability and content, which leads to corpus-specific source contributions to pleasantness. This is particularly important in the case of voices, found in multiple previous studies to have a positive effect. Conversely, the $\hat P_{\varphi 2}$ model uses a perceptual model constructed on a much larger corpus of recorded scenes, and is less prone to these specificity properties.
+Table~\ref{tab:physm} compares the performance of the two models. Both obtain good estimates of pleasantness for a 10-point scale. Again, the $\hat P_{\varphi 1}$ model optimized on this experiment's data is expectedly better, though less likely to generalize well to new scenes due to its construction process. It relies on the characteristics of the simulated scenes in terms of isolated samples variability and content, which leads to corpus-specific source contributions to pleasantness. This is particularly important in the case of voices, found in multiple previous studies to have a positive effect. Conversely, the $\hat P_{\varphi 2}$ model uses a perceptual model constructed on a much larger corpus of recorded scenes, and is less prone to these specificity properties.
 
 \begin{table}[t]
 \centering
@@ -478,7 +475,7 @@ Considering the abovementioned potential unstability of the sound level model, t
 \hline
 	Model & \multicolumn{2}{|c}{Sound level} & \multicolumn{2}{|c}{Presence} & \multicolumn{2}{|c}{$\hat T_s(\alpha, \beta)$} \\ \hline
 	Sub-corpus & 1 & 2 & 1 & 2 & 1 & 2 \\ \hline
-	RMSE & 1.02 & 1.17 & 1.12 & 1.18 & 1.33 & 1.29 \\ 
+	RMSE & 1.02 & 1.17 & 1.12 & 1.18 & 1.33 & 1.29 \\
 	MAE & 0.79 & 0.97 & 0.82 & 0.95 & 1.00 & 1.02 \\ \hline
 	r & 0.85** & 0.79** & 0.86** & 0.80** & 0.76** & 0.77** \\ \hline
 \end{tabular}
@@ -494,7 +491,7 @@ A perceptual experiment is conducted with the objectives of 1) demonstrating tha
 
 Subsequently, a deep learning model with simple, state-of-the-art architecture is developed for this task. The model takes as input the fast third-octave band representation of the mixed scene and is trained on a corpus of simulated scenes to output presence labels in short time frames of 1s. Low pleasantness prediction errors are achieved on the perceptual experiment corpus: around 1.15 root mean-squared error on a 10-point scale.\\
 
-Future work will be mainly focused on the study of the robustness of developed models to new environment and data. Here only three sources were considered during training, and a limited isolated sound sources database. Thus, pleasantness estimation chain needs to be adapted to the city of Lorient, in which the Cense sensor network is to be implemented, as it contains specific sound environments as well as unique sources that were not considered in this study. 
+Future work will be mainly focused on the study of the robustness of developed models to new environment and data. Here only three sources were considered during training, and a limited isolated sound sources database. Thus, pleasantness estimation chain needs to be adapted to the city of Lorient, in which the Cense sensor network is to be implemented, as it contains specific sound environments as well as unique sources that were not considered in this study.
 
 \clearpage
 
@@ -527,9 +524,9 @@ Future work will be mainly focused on the study of the robustness of developed m
 
 
 %\begin{itemize}
-%\item 
-%\item 
-%\item 
+%\item
+%\item
+%\item
 %\end{itemize}
 
 
@@ -582,4 +579,3 @@ Future work will be mainly focused on the study of the robustness of developed m
 \end{thebibliography}
 
 \end{document}
-
