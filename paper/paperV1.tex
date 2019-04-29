@@ -36,16 +36,15 @@ $^3$ IFSTTAR, CEREMA, UMRAE, F-44344, Bouguenais, France
 
 \section{Introduction}
 \label{sec:intro}
+In urban areas, the decrease of quality of sound environments resulting from urbanization is a major cause of annoyance, and has been identified as an important health factor. Consequently, the 2002/49/CE European directive~\cite{ec2002} requires the development of noise maps in large cities. These maps aim at providing useful tools for urban planning and noise reduction purposes. As an alternative to the noise-only paradigm, the soundscape approach defined in the ISO 12913-1~\cite{iso2014} norm as "the acoustic environment as perceived and understood and/or experienced by people and/or society, in context" extends the characterization of sound environments by considering the possible positive influence of some of its components.\\
 
-In urban areas, the decrease of quality of sound environments resulting from urbanization is a major cause of annoyance, and has been identified as an important health factor. Consequently, the 2002/49/CE European directive~\cite{ec2002} requires the development of noise maps in large cities. These maps aim at providing useful tools for urban planning and noise reduction purposes. As an alternative to the noise-only paradigm, the soundscape approach defined in the ISO 12913-1~\cite{iso2014} norm as "the acoustic environment as perceived and understood and/or experienced by people and/or society, in context" extends the characterization of sound environments by considering the positive influence of some of its components.\\
+The assessment of soundscape quality through standardized perceptual descriptors has been extensively studied~\cite{viollon2000, axelsson2010, cain2013, jeon2018, aletta2016}. Aletta et al.~\cite{aletta2016} did a review of soundscape descriptors and conclude that the potential soundscape descriptors identified so far seem to converge towards a two-dimensional soundscape model of perceived affective quality where one dimension corresponds to the pleasantness of the soundscape, and the orthogonal one corresponds to its enventfulness~\cite{axelsson2010, aumond2017, delaitre2014}. In this paper, we will focus on the first affective dimension which is pleasantness.\\
 
-The assessment of soundscape quality through standardized perceptual descriptors has been extensively studied~\cite{viollon2000, axelsson2010, cain2013, jeon2018, aletta2016}. Specifically, the axis of pleasantness emerges as the first dimension in subjective assessments of soundscapes, and is thus increasingly associated with soundscape quality in the recent literature~\cite{axelsson2010, aumond2017, delaitre2014}. Pleasantness is consistently modeled as a function of both the perceived sound level and the activity of sources of interest within urban environments. While the exact taxonomy of sources used differs across studies, three major source types are found to contribute to pleasantness in urban contexts: technological, human and natural sources~\cite{nilsson2007, axelsson2010}, which can be simplified as traffic, human voices and birds~\cite{lavandier2006, ricciardi2014, aumond2017}. In existing models, source activity can be quantified by the dominance, emergence or time of presence.\\
+Pleasantness is mainly linked to the perceived loudness~\cite{blauert1997, jekosch2004} but it also depends on the activity of sources of interest~\cite{nilsson2007, perez2012}. While the exact taxonomy of sources used differs across studies~\cite{guastavino2007, gygi2007, salamon2014, brown2011}, three major source types are found to contribute to pleasantness in urban contexts: technological, human and natural sources~\cite{nilsson2007, axelsson2010} and traffic noise, human voices and birds calls can respectively be used as a proxy of its three types~\cite{lavandier2006, ricciardi2014, aumond2017}. In existing models, source activity can be quantified by the dominance~\cite{hong2017}, the emergence~\cite{guastavino2006} or the time of presence~\cite{ricciardi2014}. Though, the perceptual characterization of soundscapes requires subjective inputs, and thus cannot directly be applied to the production of perceptually motivated noise maps.\\
 
-Though, the perceptual characterization of soundscapes requires subjective inputs, and thus cannot directly be applied to the production of perceptually motivated noise maps. Leveraging the advent of the Internet of Things (IoT) and the availability of low-cost sensor networks~\cite{ardouin2018, mydlarz2017} could allow us to predict pleasantness or other perceptual factors from acoustic measurements at a reasonable cost. Though, bridging the gap between raw data issued from the sensors to reasonable estimates of perceptual attributes is yet an ongoing area of research.\\
+Leveraging the advent of the Internet of Things (IoT) and the availability of low-cost sensor networks~\cite{ardouin2018, mydlarz2017} could allow us to predict pleasantness or other perceptual factors from acoustic measurements at a reasonable cost. Though, bridging the gap between raw data issued from the sensors to reasonable estimates of perceptual attributes is yet an ongoing area of research. Ricciardi et al.~\cite{ricciardi2014} present a physical model of pleasantness using only variations of the measured sound level. Though, because these indicators are not representative of the composition of the sound scene, the model underperforms in comparison to predictions using perceptual assessments. Aumond et al.~\cite{aumond2017} explore new indicators based on spectral and temporal variations in recordings of sound scenes. These indicators are designed to model the activity of specific sound sources, specifically human voices and birds, but their discriminative properties are limited. In order to tackle this issue, the recent advances in machine learning can be useful to better approximate the contributions of sound sources relevant for perceptual attribute prediction such as pleasantness.
 
-Ricciardi et al.~\cite{ricciardi2014} present a physical model of pleasantness using only variations of the measured sound level. Though, because these indicators are not representative of the composition of the sound scene, the model underperforms in comparison to predictions using perceptual assessments. Aumond et al.~\cite{aumond2017} explore new indicators based on spectral variations in recordings of sound scenes. These indicators are designed to model the activity of specific sound sources, specifically human voices and birds, but their discriminative properties are limited. In order to tackle this issue, we believe that the recent advances in machine learning can be useful to better approximate the contributions of sound sources relevant for perceptual attribute prediction such as pleasantness.\\
-
-In this paper, we do so by developing new indicators relying on source recognition models which are built based on deep learning techniques, which is a growing interest in the machine listening community~\cite{cakir2015, salamon2017-2}. Large amounts of annotated data are needed for these architectures to learn to extract relevant information from recordings and to the best of our knowledge such databases do not currently exist in the literature. We propose in this paper to study the potential of the use of simulated corpora~\cite{rossignol2015, salamon2017} for such purpose.\\
+In this paper, we do so by developing new indicators relying on source recognition models based on deep learning techniques, which is a growing interest in the machine listening community~\cite{cakir2015, salamon2017-2}. Large amounts of data with task-specific annotations are needed for these architectures to learn to extract relevant information from recordings. To the best of our knowledge such databases do not currently exist in the literature in the case of source recognition with perceptual activity labels. We propose in this paper to study the potential of the use of simulated corpora~\cite{rossignol2015, salamon2017} for such purpose.\\
 
 More precisely, the contributions of this paper are three-fold:
 \begin{enumerate}
@@ -54,7 +53,29 @@ More precisely, the contributions of this paper are three-fold:
   \item Provide a comparative study of the behavior of the proposed approach with state of the art ones.
 \end{enumerate}
 
-First, a perceptual test is conducted in Section~\ref{sec:data} where simulated sound scenes are compared to recordings to validate their use for the prediction of pleasantness. Next, Section~\ref{sec:methods} presents the design of a deep learning architecture that performs multi-label sound source recognition at relevant time scales. Estimations of pleasantness using these predictions are next compared to existing models from physical indicators in Section~\ref{sec:results}.
+First, a perceptual test is conducted in Section~\ref{sec:data} where simulated sound scenes are compared to recordings to validate the relevance of the proposed protocol for applications in \textit{in situ} sound environments. Next, Section~\ref{sec:methods} presents the design of a deep learning architecture that performs multi-label sound source recognition at relevant time scales. Time of presence estimations from this architecture are evaluated in Section~\ref{sec:results} in the context of pleasantness prediction, in comparison to existing models from perceptual and physical indicators.
+
+
+
+
+%In urban areas, the decrease of quality of sound environments resulting from urbanization is a major cause of annoyance, and has been identified as an important health factor. Consequently, the 2002/49/CE European directive~\cite{ec2002} requires the development of noise maps in large cities. These maps aim at providing useful tools for urban planning and noise reduction purposes. As an alternative to the noise-only paradigm, the soundscape approach defined in the ISO 12913-1~\cite{iso2014} norm as "the acoustic environment as perceived and understood and/or experienced by people and/or society, in context" extends the characterization of sound environments by considering the positive influence of some of its components.\\
+%
+%The assessment of soundscape quality through standardized perceptual descriptors has been extensively studied~\cite{viollon2000, axelsson2010, cain2013, jeon2018, aletta2016}. Specifically, the axis of pleasantness emerges as the first dimension in subjective assessments of soundscapes, and is thus increasingly associated with soundscape quality in the recent literature~\cite{axelsson2010, aumond2017, delaitre2014}. Pleasantness is consistently modeled as a function of both the perceived sound level and the activity of sources of interest within urban environments. While the exact taxonomy of sources used differs across studies, three major source types are found to contribute to pleasantness in urban contexts: technological, human and natural sources~\cite{nilsson2007, axelsson2010}, which can be simplified as traffic, human voices and birds~\cite{lavandier2006, ricciardi2014, aumond2017}. In existing models, source activity can be quantified by the dominance, emergence or time of presence.\\
+%
+%Though, the perceptual characterization of soundscapes requires subjective inputs, and thus cannot directly be applied to the production of perceptually motivated noise maps. Leveraging the advent of the Internet of Things (IoT) and the availability of low-cost sensor networks~\cite{ardouin2018, mydlarz2017} could allow us to predict pleasantness or other perceptual factors from acoustic measurements at a reasonable cost. Though, bridging the gap between raw data issued from the sensors to reasonable estimates of perceptual attributes is yet an ongoing area of research.\\
+%
+%Ricciardi et al.~\cite{ricciardi2014} present a physical model of pleasantness using only variations of the measured sound level. Though, because these indicators are not representative of the composition of the sound scene, the model underperforms in comparison to predictions using perceptual assessments. Aumond et al.~\cite{aumond2017} explore new indicators based on spectral variations in recordings of sound scenes. These indicators are designed to model the activity of specific sound sources, specifically human voices and birds, but their discriminative properties are limited. In order to tackle this issue, we believe that the recent advances in machine learning can be useful to better approximate the contributions of sound sources relevant for perceptual attribute prediction such as pleasantness.\\
+%
+%In this paper, we do so by developing new indicators relying on source recognition models which are built based on deep learning techniques, which is a growing interest in the machine listening community~\cite{cakir2015, salamon2017-2}. Large amounts of annotated data are needed for these architectures to learn to extract relevant information from recordings and to the best of our knowledge such databases do not currently exist in the literature. We propose in this paper to study the potential of the use of simulated corpora~\cite{rossignol2015, salamon2017} for such purpose.\\
+%
+%More precisely, the contributions of this paper are three-fold:
+%\begin{enumerate}
+%  \item Provide controlled acoustic data and corresponding perceptual attributes relevant to the study of urban soundscapes perception, made available for the community.
+%  \item Propose numerical means~\footnote{Code is open source and available at the companion website.} for predicting the time of presence of sound sources from raw acoustic data
+%  \item Provide a comparative study of the behavior of the proposed approach with state of the art ones.
+%\end{enumerate}
+%
+%First, a perceptual test is conducted in Section~\ref{sec:data} where simulated sound scenes are compared to recordings to validate their use for the prediction of pleasantness. Next, Section~\ref{sec:methods} presents the design of a deep learning architecture that performs multi-label sound source recognition at relevant time scales. Estimations of pleasantness using these predictions are next compared to existing models from physical indicators in Section~\ref{sec:results}.
 
 
 \section{Data}
@@ -63,14 +84,14 @@ First, a perceptual test is conducted in Section~\ref{sec:data} where simulated 
 \subsection{Corpus generation}
 \label{sec:data_corp}
 
-A corpus is first created to validate the use of simulated sound scenes in the development of pleasantness prediction models. It is based on recordings from one of the four soundwalks performed in~\cite{aumond2017}, including 19 locations in the 13th district of Paris, France. A classification of these scenes is proposed in~\cite{gloaguen2017} in terms of ambiance: \textit{park}, \textit{quiet street}, \textit{noisy street} and \textit{very noisy street}. For each of the 19 recordings, 45 seconds of audio in a single channel are extracted that represent well the properties of their respective ambiances, without single events overwhelming their overall perception. The resulting 45 second extracts are replicated to study perceptual differences between recorded and simulated scenes. The recordings are first annotated in terms of the following properties:
+A corpus is first created to validate the use of simulated sound scenes in the development of time presence prediction models. It is based on recordings from one of the four soundwalks performed in~\cite{aumond2017}, including 19 locations in the 13th district of Paris, France. A classification of these scenes is proposed in~\cite{gloaguen2017} in terms of ambiance: \textit{park}, \textit{quiet street}, \textit{noisy street} and \textit{very noisy street}. For each of the 19 recordings, 45 seconds of audio in a single channel are extracted that represent well the properties of their respective ambiances, without single events overwhelming their overall perception. The resulting 45 second extracts are replicated to study perceptual differences between recorded and simulated scenes. This scale of 45 seconds is chosen to be perceptually relevant for the retrospective evaluation of sound environments. The recordings are first annotated in terms of the following properties:
 
 \begin{itemize}
 \item Background sources that are present throughout the whole scene, and are associated with a sound level.
 \item Sound events characterized for each occurrence by their source type, onset-offset and event-to-background ratio (EBR) in dB.
 \end{itemize}
 
-Sound scenes are then simulated using simScene~\cite{rossignol2015} with a database of extracts from recordings of isolated sound sources. This database is constructed from excerpts of the LibriSpeech~\cite{panayotov2015} corpus for voices and Freesound\footnote{\url{https://freesound.org}} contributions for remaining sources. The original recordings from 6 locations (P1, P3, P4, P8, P15 and P18) are chosen for perceptual comparison, as they explore diverse real-life situations with respect to environment categorization. All 6 recorded and 19 replicated scenes are normalized so that their playback sound level is the same as measured during recording, with a range from 63.9~dB to 79.4~dB.\\
+Sound scenes are then simulated using simScene~\cite{rossignol2015}, a software library in Matlab which allows the simulation of sound scenes as the additive composition of sound sources using a database of recordings associated to these sources. Here the database is constructed from excerpts of the LibriSpeech~\cite{panayotov2015} corpus for voices and Freesound\footnote{\url{https://freesound.org}} contributions for remaining sources. The original recordings from 6 locations (P1, P3, P4, P8, P15 and P18) are chosen for perceptual comparison, as they explore diverse real-life situations with respect to environment categorization. All 6 recorded and 19 replicated scenes are normalized so that their playback sound level through the restitution system is the same as measured during recording, with a range from 63.9~dB to 79.4~dB.\\
 
 
 \begin{figure}[h]
@@ -87,7 +108,7 @@ Sound scenes are then simulated using simScene~\cite{rossignol2015} with a datab
         \centering
         \includegraphics[width=\textwidth]{figures/vb_pres.eps}
     \end{subfigure}
-    \caption{Estimated time of presence of traffic, voices and birds sources for the corpus of simulated scenes with automatically generated scenarios.}\label{fig:tvb_pres}
+    \caption{Physical estimations~\cite{gontier2018} of the perceived time of presence of traffic, voices and birds sources for the corpus of simulated scenes with automatically generated scenarios.}\label{fig:tvb_pres}
 \end{figure}
 
 To further study the perceptual properties of simulated scenes, the corpus is extended with 75 simulated scenes corresponding to new scenarios. Previous studies show that pleasantness is mainly influenced by the activity of three sources: \textit{traffic}, \textit{human voices} and \textit{birds}. We choose to restrict the scene composition to these 3 sources. Newly generated scenarios should cover most real-life situations while remaining perceptually plausible. Thus, statistics on background and event properties are extracted for each of the three sources from annotations presented in~\cite{gloaguen2017}. These statistics include, conditionally to the ambiance:
@@ -115,7 +136,7 @@ A perceptual experiment is conducted where participants are asked to evaluate so
 \item Calmness: \textit{Agitated, chaotic - Calm, peaceful} (\textit{Agit\'e, chaotique - Calme, tranquille}) - C
 \end{itemize}
 
-These quantities are typically studied in the perceptual characterization of sound scenes~\cite{axelsson2010, aumond2017, nilsson2007}. While this work focuses on pleasantness, including other dimensions can be useful to verify the relevance of the data in relation to previous work.\\
+These quantities are typically studied in the perceptual characterization of sound scenes~\cite{axelsson2010, aumond2017, nilsson2007}. While this work focuses on the application of pleasantness prediction, including other dimensions can be useful to verify the relevance of simulated data in relation to previous work on real scenarios.\\
 
 The perception of source activity can be linked to the notions of dominance, time of presence, or emergence. We choose the perceptual time of presence, that is the percentage of time for which the corresponding source is heard, as the activity descriptor for this study. The influence of traffic on pleasantness is further separated into that of background and salient events. Thus, 4 additional questions are presented:
 \begin{itemize}
@@ -123,13 +144,13 @@ The perception of source activity can be linked to the notions of dominance, tim
 \item Time of presence of Traffic, Voices, Birds: \textit{Never - Continuously} (\textit{Jamais - Continuellement}), resp. $T_{T, p}$, $T_{V, p}$ and $T_{B, p}$
 \end{itemize}
 
-Prior to the test, participants are given a short verbal introduction and the interface is introduced before the test to ensure that the quantities are well understood. Although the corpus is comprised of 100 sound scenes, participants only evaluate 50 scenes: all listen to the 6 recorded and 19 replicated sound scenes, then to 25 of the 75 simulated with new scenarios according to a balanced incomplete block design~\cite{dagnelie2003}. The selection of simulated scenes is done so that all scenes in the sub-corpus are evaluated by the same number of participants. All participants are first presented with the most quiet then most noisy of the recorded scenes (resp. P3 and P15) to calibrate their answers. A random listening order is generated for each subject to attenuate ordering effects for the remaining of the test. Participants can only listen to each scene once, and have to answer all questions and listen to the full extract before proceeding to the next.\\
+Prior to the test, participants are given a short verbal introduction and the interface is introduced before the test to ensure that the quantities are well understood. Although the corpus is comprised of 100 sound scenes, participants only evaluate 50 scenes: all listen to the 6 recorded and 19 replicated sound scenes, then to 25 of the 75 simulated with new scenarios according to a balanced incomplete block design~\cite{dagnelie2003}. The selection of simulated scenes is done so that all scenes in the sub-corpus are evaluated by the same number of participants. All participants are first presented with the most quiet then most noisy of the recorded scenes (resp. P3 and P15). A random listening order is generated for each subject to attenuate ordering effects for the remaining of the test. Participants can listen to each scene once, and have to answer all questions and listen to the full extract before proceeding to the next.\\
 
-The scenes are played at a given sound level as discussed in Section~\ref{sec:data_corp}, through the same computer and sound card configurations. Beyerdynamics DT-990 Pro headphones are used for all participants. These headphones are calibrated in a semi-anechoic chamber, resulting in a relation between playback Leq and LAeq and sound card output voltage for pink noise. This ensures that correctly scaled scenes will be heard at the desired sound level by listeners.\\
+The scenes are played at a given sound level as discussed in Section~\ref{sec:data_corp}, through the same computer and sound card configurations. Beyerdynamics DT-990 Pro headphones are used for all participants. These headphones are calibrated in a semi-anechoic chamber where a relation between the playback sound level and the sound card output voltage is obtained for pink noise. From this information a scaling factor is applied to the sound scenes to ensure that they are heard at the desired sound level by listeners.\\
 
 A total of 23 students aged from 22 to 23 including 16 males and 7 females at Ecole Centrale de Nantes completed the test. All gave consent prior to the experiment and reported normal hearing.
 
-\subsection{Validation}
+\subsection{Corpus validation}
 \label{sec:data_val}
 
 Participants evaluate each scene on criteria using 11-point Likert scales. Many statistical tools assume that the studied data follows continuous, single mode distributions. It is thus important to first verify that no distinct groups of participants can be obtained from perceptual assessments. A hierarchical clustering analysis of the judgements of the participants is performed for the 25 scenes in the commonly evaluated sub-corpus. Starting with the assessments of each participant as separate clusters, new clusters are formed iteratively where the average euclidean distance between all pairs within the two merged clusters at each step is minimal. and shown in Figure~\ref{fig:hclusters}. No clear separation into groups is found, as a result the assessment distributions are assumed to be single-mode and their means can be used for further analysis.\\
@@ -179,7 +200,7 @@ Discrepancies between projections of original and replicated scenes are highligh
 \section{Methods}
 \label{sec:methods}
 
-\subsection{Indicators for pleasantness prediction}
+\subsection{Acoustical indicators for soundscape description}
 \label{sec:methods_inds}
 
 Based on previous studies~\cite{aumond2017, gontier2018, ricciardi2014}, several indicators are identified that correlate well with perceptual parameters. These indicators can be used to develop baseline physical models of pleasantness in the design of a deep learning architecture for sound source recognition.\\
@@ -194,7 +215,11 @@ First, indicators can be computed directly from the mixed audio, without the nee
 \item $LA_{10}-LA_{90}$: Emergence indicator included in the pleasantness model presented in~\cite{ricciardi2014}.
 \end{itemize}
 
-The time and frequency second derivative ($TFSD$) is introduced in~\cite{aumond2017} as a descriptor of source activity. To provide a baseline for pleasantness prediction, the $TFSD$ is computed for the 4kHz band and 125~ms measurements ($TFSD_{4kHz(1/8s)}$) to represent birds, and for the 500Hz band with 1~s measurements ($TFSD_{500Hz(1s)}$) to represent voices.\\
+The time and frequency second derivative ($TFSD$) is introduced in~\cite{aumond2017} as a descriptor of source activity. Its expression is:
+\begin{equation}
+TFSD_{f, t} = \frac{\lvert\frac{dL(f, t)}{dfdt}\rvert}{\sum_{f=31.5Hz}^{f=16kHz}\lvert\frac{dL(f, t)}{dfdt}\rvert}
+\end{equation}
+To provide a baseline for pleasantness prediction, the $TFSD$ is computed for the 4kHz band and 125~ms measurements ($TFSD_{4kHz(1/8s)}$) to represent birds, and for the 500Hz band with 1~s measurements ($TFSD_{500Hz(1s)}$) to represent voices.\\
 
 The simulation process outputs ground truth source contributions as separate channels. Additional indicators are computed on the separated audio signals for the traffic, voices and birds sources:
 
@@ -215,7 +240,7 @@ where $r$ is the Pearson's correlation coefficient, $s$ denotes the sound source
 In the remainder of this paper, the subscript $s$ is replaced with the corresponding source initial: $T$ for traffic, $V$ for voices and $B$ for birds.
 
 
-\subsection{Indicator prediction using deep learning}
+\subsection{Source presence detection using deep learning}
 \label{sec:methods_deep}
 
 To train deep learning architectures for source recognition, a larger corpus is constructed. It is composed of two datasets of simulated scenes:
@@ -230,7 +255,7 @@ The developped model should extract relevant source information from a represent
 
 Target outputs are associated to each input frame to train the model. In~\cite{gontier2018} the time of presence of traffic, voices and birds was successfully approximated by the $\hat T_s(\alpha, \beta)$ indicator. Thus, the source presence values given by this indicator can be used as weak perceptual time of presence labels. Alternatively, it is possible to perform sound level estimation using ground truth labels provided by the simulation process before computing $\hat T_s(\alpha, \beta)$. Though, training a model for sound level regression is more difficult than for source detection as it requires the architecture to perform implicit source separation. This will not be discussed here as it did not result in better time of presence estimations in our experiments.\\
 
-A deep learning model is implemented and trained for the source presence prediction task, with the architecture shown in Figure~\ref{fig:deep_arch}. The model includes 4 blocks of convolutional layers followed by leaky rectified linear unit (LeakyReLU) activations of expression $y = max(0.1x, x)$ . The convolutional layers have respectively 128, 64, 32 and 32 output maps, \textit{i.e.} channels, and a common kernel size of 5x5. The output of the last block is flattened then goes through a fully connected layer with output size 3. A final sigmoid activation is used to obtain outputs in the 0-1 range. The resulting 3 values correspond to the presence of traffic, voices and birds respectively, and are compared during training to presence labels given by $\hat T_s(\alpha, \beta)$ using a binary cross-entropy cost function:
+A deep learning model is implemented and trained for the source presence prediction task, with the architecture shown in Figure~\ref{fig:deep_arch}. The model includes 4 blocks of convolutional layers followed by leaky rectified linear unit (LeakyReLU) activations of expression $y = max(0.1x, x)$. The convolutional layers have respectively 128, 64, 32 and 32 output maps, \textit{i.e.} channels, and a common kernel size of 5x5. The output of the last block is flattened then goes through a fully connected layer with output size 3. A final sigmoid activation is used to obtain outputs in the 0-1 range. The resulting 3 values correspond to the presence of traffic, voices and birds respectively, and are compared during training to presence labels given by $\hat T_s(\alpha, \beta)$ using a binary cross-entropy cost function:
 \begin{equation}
 L(y, \hat y) = -\sum_s y_s log\left(\hat y_s\right) + (1-y_s) log\left(1-\hat y_s\right)
 \end{equation}
@@ -247,6 +272,8 @@ When using the model's outputs to estimate the time of presence of sources, a th
 
 \section{Results}
 \label{sec:results}
+
+The proposed method for predicting the time of presence of sources is evaluated in the context of pleasantness estimation. To this aim, baseline models are first constructed using data from the experiment in Section~\ref{sec:data_exp} and from previous work.
 
 \subsection{Perceptual pleasantness model}
 \label{sec:results_perc}
@@ -272,20 +299,20 @@ When using the model's outputs to estimate the time of presence of sources, a th
 %}
 \end{table}
 
-We first study the relations between perceptual scales with respect to existing work. Table~\ref{tab:percc} shows the Pearson's correlation coefficients at the scene level, that is on the mean responses for each scene. The resulting values are consistent with the literature~\cite{aumond2017, gontier2018}, both between general scales as discussed in Section~\ref{sec:data_val} and for the relations to source contributions. Indeed, pleasantness (P) is mainly influenced negatively by overall loudness and traffic and positively by birds. In previous studies a small positive contribution of voices to pleasantness was found, while no direct relation is visible from the data gathered. This can be explained by the choice of speech samples used during generation, which consist of read audiobooks extracts and thus may sound unnatural in the considered urban environments. Liveliness (L) is here negatively though weakly (r<0.4) correlated with the presence of birds, while no significant relation was found in previous studies.\\
+We first study the relations between perceptual scales with respect to existing work. Table~\ref{tab:percc} shows the Pearson's correlation coefficients at the scene level, that is on the mean responses for each scene. The resulting values are consistent with the literature~\cite{aumond2017, gontier2018}, both between general scales as discussed in Section~\ref{sec:data_val} and for the relations to source contributions. Indeed, pleasantness (P) is mainly influenced negatively by overall loudness and traffic and positively by birds. In previous studies a small positive contribution of voices to pleasantness was found, while no direct relation is visible from the data gathered. This can be explained by the choice of speech samples used during generation, which consist of read audiobooks extracts and thus may sound unnatural in the considered urban environments. Liveliness (L) is here negatively though weakly (r<0.4) correlated with the presence of birds, while no significant relation was found in previous studies. However, its correlation with the presence of human voices is the strongest, as expected~\cite{axelsson2010}.\\
 
-Relations between source-specific parameters are also weak with the exception of traffic being negatively correlated with birds. The perceived sound level of passing vehicles $L_{T, p}$ is a potential alternative to the time of presence of traffic $T_{T, p}$. Except for the interest (I) it displays higher correlations with general scales and lower correlations with other source-specific parameters.\\
+Relations between source-specific parameters are also weak with the exception of traffic being negatively correlated with birds. The perceived sound level of passing vehicles $L_{T, p}$ is a potential alternative to the time of presence of traffic $T_{T, p}$. Except for the interest (I) the $L_{T, p}$ displays higher correlations with general scales and lower correlations with other source-specific parameters.\\
 
 As a baseline for pleasantness prediction, multilinear models are built as a function of both the overall loudness (OL) and source-specific parameters. To ensure that no multi-collinearity is present between predictors a variance inflation factor (VIF) test is performed prior to model regression. Only models for which all predictors verify $VIF<5$ are considered valid. The best resulting models with statistically significant estimates ($p<0.05$) for all predictors are:
 
 \begin{align}
-\hat P_{p1} &= 8.56 - 0.63~OL - 0.20~L_{T, p} + 0.11~T_{V, p} + 0.14~T_{B, p}\\
-\hat P_{p2} &= 8.99 - 0.67~OL - 0.15~T_{T, p} + 0.08~T_{V, p} + 0.12~T_{B, p}
+\hat P_{p1} &= 8.56 - 0.63~OL - 0.20~L_{T, p} + 0.11~T_{V, p} + 0.14~T_{B, p} \label{eq:pp1}\\
+\hat P_{p2} &= 8.99 - 0.67~OL - 0.15~T_{T, p} + 0.08~T_{V, p} + 0.12~T_{B, p} \label{eq:pp2}
 \end{align}
 
 Both models have very similar formal expressions, with important negative contributions of the overall loudness and traffic activity. A small positive contribution of the time of presence of voices is also found despite no significant correlation.\\
 
-Table~\ref{tab:percm} summarizes performance metrics computed for the two models. $\hat P_{p1}$ and $\hat P_{p2}$ display similar estimation errors as well as no significant difference in adjusted $R^2$ and correlation to assessed pleasantness. The mean standard deviation of pleasantness assessments for this experiment is about 1.77 on the 11-point scale, the obtained perceptual models are thus considered accurate with about 0.6 RMSE.
+Table~\ref{tab:percm} summarizes performance metrics computed for the two models. $\hat P_{p1}$ and $\hat P_{p2}$ display similar estimation errors as well as no significant difference in adjusted $R^2$ and correlation to assessed pleasantness. The performance of obtained perceptual models is about 0.6 RMSE, which is below the mean standard deviation of pleasantness assessments for this experiment (1.77).
 
 \begin{table}[t]
 \centering
@@ -304,9 +331,9 @@ Table~\ref{tab:percm} summarizes performance metrics computed for the two models
 \subsection{Physical pleasantness models}
 \label{sec:results_phys}
 
-The analysis of physical indicators presented in Section~\ref{sec:methods_inds} is done using the arithmetic mean of subjective assessments over all participants for replicated and simulated scenes. Two scenes containing only one source are excluded for implementation concerns, resulting in $n=92$ scenes.\\
+The analysis of physical indicators presented in Section~\ref{sec:methods_inds} is done using the arithmetic mean of subjective assessments over all participants for replicated and simulated scenes. The 6 recorded scenes are excluded from the study as the ground truth source composition is unknown. Two scenes containing only one source are also excluded for implementation concerns, resulting in $n=92$ scenes.\\
 
-Table~\ref{tab:physc} shows the Pearson's correlation coefficients between computed physical indicators and perceptual assessments. First, all measurements of global sound levels correlate well (r>0.9) with the perceived overall loudness. Regarding source-specific perceptual parameters, the $L_{eq, s}$ correlates consistently well with the $T_{s, p}$ of corresponding source. Conversely, the emergence $\Delta L_s$ fails to represent the perceived bird activity, and correlations are weaker for other sources. The proposed estimates of the time of presence $\hat T_s(\alpha, \beta)$ show strong correlations to their perceptual counterparts (r>0.8), along with good source discrimination properties. They are also better predictors than the $TFSD_{500Hz, 1s}$ and $TFSD_{4kHz, 1/8s}$ indicators for voice and bird activity. Interestingly, the perceived sound level of passing vehicles $L_{T, p}$ is best represented by the $L_{10}$. In perceptual models including the sound level of traffic events, the global $L_{10}$ may thus be a sufficient predictor without a source separation and level estimation algorithm.\\
+Table~\ref{tab:physc} shows the Pearson's correlation coefficients between computed physical indicators and perceptual assessments. First, all global sound level indicators correlate well (r>0.9) with the perceived overall loudness. Regarding source-specific perceptual parameters, the $L_{eq, s}$ correlates consistently well with the $T_{s, p}$ of corresponding source. Conversely, the emergence $\Delta L_s$ fails to represent the perceived bird activity, and correlations are weaker for other sources. The proposed estimates of the time of presence $\hat T_s(\alpha, \beta)$ show strong correlations to their perceptual counterparts (r>0.8), along with good source discrimination properties. They are also better predictors than the $TFSD_{500Hz, 1s}$ and $TFSD_{4kHz, 1/8s}$ indicators for voice and bird activity. Interestingly, the perceived sound level of passing vehicles $L_{T, p}$ is best represented by the $L_{10}$. In perceptual models including the sound level of traffic events, the global $L_{10}$ may thus be a sufficient predictor without a source separation and level estimation algorithm.\\
 
 \begin{table}
 \centering
@@ -341,9 +368,9 @@ Table~\ref{tab:physc} shows the Pearson's correlation coefficients between compu
 
 Subsequently, multilinear models of pleasantness are constructed based on the results of the analysis of correlations. As in Section~\ref{sec:results_perc} a VIF check is performed on predictors to ensure that no multi-collinearity exists. On the present corpus, the best model is:
 \begin{equation}
-\hat P_{\varphi 1} = 16.71 - 0.18~L_{50} + 1.01~\hat T_B(\alpha, \beta)
+\hat P_{\varphi 1} = 16.71 - 0.18~L_{50} + 1.01~\hat T_B(\alpha, \beta) \label{eq:pphi}
 \end{equation}
-Indicators related to traffic and voices activity are absent compared to the perceptual models in Section~\ref{sec:results_perc}. This is because the $L_{50}$ used as a predictor is correlated to both traffic parameters $L_{T, p}$ and $T_{T, p}$ that appeared in perceptual models $\hat P_{p1}$ and $\hat P_{p2}$ respectively, and no strong contribution of voices to pleasantness is identified in this corpus.\\
+Indicators related to traffic and voices activity are absent compared to the perceptual models in Section~\ref{sec:results_perc}. This is because the $L_{50}$ used as a predictor is correlated to both traffic parameters $L_{T, p}$ and $T_{T, p}$ that appeared in perceptual models $\hat P_{p1}$ (eq.\ref{eq:pp1}) and $\hat P_{p2}$ (eq.\ref{eq:pp2}) respectively, and no strong contribution of voices to pleasantness is identified in this corpus.\\
 
 This model is compared to two baselines proposed in~\cite{ricciardi2014} and~\cite{aumond2017}, for which predictor variables are directly computed from the audio signal. Both models' coefficients are optimized on the studied data:
 \begin{align}
@@ -351,7 +378,7 @@ This model is compared to two baselines proposed in~\cite{ricciardi2014} and~\ci
 \hat P_{\varphi 3} &= 13.03 - 0.16~L_{50, 1kHz} + 9.60~TFSD_{500Hz, 1s} + 5.00~TFSD_{4kHz, 1/8s}
 \end{align}
 
-Table~\ref{tab:physm} compares the performance of the three models. Expectedly, $\hat P_{\varphi 1}$ outperforms both baselines. Though, compared to the best perceptual models its explained variance is about 9\% lower. Its RMSE is also significantly higher, but acceptable considering the average standard deviation of pleasantness assessments of 1.77 on a 10-point scale. Introducing the $L_{10}-L_{90}$ emergence in $\hat P_{\varphi 2}$ has no significant impact on predictions, using only the $L_{50}$ results in the same performance.\\
+Table~\ref{tab:physm} compares the performance of the three models. Expectedly, $\hat P_{\varphi 1}$ outperforms both baselines. Though, compared to the best perceptual models its explained variance is about 9\% lower. Its RMSE is also significantly higher, but acceptable considering the average standard deviation of pleasantness assessments of 1.77 on a 11-point scale. Introducing the $L_{10}-L_{90}$ emergence in $\hat P_{\varphi 2}$ has no significant impact on predictions, using only the $L_{50}$ results in the same performance.\\
 
 \begin{table}[t]
 \centering
@@ -369,7 +396,7 @@ Table~\ref{tab:physm} compares the performance of the three models. Expectedly, 
 \end{table}
 
 
-\subsection{Pleasantness prediction through deep learning}
+\subsection{Time of presence prediction through deep learning}
 \label{sec:results_deep}
 
 The performance of the source detection deep learning architecture presented in Section~\ref{sec:methods_deep} on the evaluation dataset is summarized in Table~\ref{tab:perf_cmp}. The overall presence detection accuracy is 92.11\%. The model performs similarly well for the three sources, ranging from 90.08\% for birds to 94.09\% for traffic. Regarding the type of errors, they are equally split between false positives and false negatives. Though, these rates vary depending on the type of source. Traffic has a very low false positive rate at 2.46\% and high false negative rate, while birds display the highest false positive rate at 12.30\%. This is expected given the spectral content related to these sources. Traffic is usually located in lower frequencies than voice or bird events, but may contain high frequency components mistaken for birds by the model. The resulting error on the time of presence is 0.12 RMSE overall on a 0-1 scale, and is close for the three sources.\\
@@ -377,7 +404,7 @@ The performance of the source detection deep learning architecture presented in 
 
 \begin{table}[t]
 \centering
-\caption{Performance of the model predicting source presence with $\hat T_s(\alpha, \beta)$ labels. Presence metrics are computed for n=8600 1s frames and time of presence metrics on n=200 45s scenes. (TP: true positive, TN: true negative, FP: false positive, FN: false negative)}
+\caption{Performance of the model predicting source presence with binary ground truth labels obtained from $\hat T_s(\alpha, \beta)$. Presence metrics are computed for n=8600 1s frames and time of presence metrics on n=200 45s scenes. (TP: true positive, TN: true negative, FP: false positive, FN: false negative)}
 \label{tab:perf_cmp}
 %\resizebox{\columnwidth}{!}{
 \begin{tabular}{ c | c | c c c }
@@ -389,7 +416,6 @@ The performance of the source detection deep learning architecture presented in 
 	Presenct FP (\%) & 7.70 & 2.46 & 5.24 & 12.30 \\
 	Presence FN (\%) & 8.04 & 7.30 & 10.17 & 6.63 \\ \hline
 	$\hat T_s(\alpha, \beta)$ RMSE & 0.12 & 0.13 & 0.10 & 0.11 \\
-	$\hat T_s(\alpha, \beta)$ MAE & 0.06 & 0.05 & 0.06 & 0.08 \\ \hline
 \end{tabular}
 %}
 \end{table}
@@ -399,7 +425,7 @@ Next, the capacity of these predictions to give relevant pleasantness estimates 
 \item The 25 recorded and replicated scenes, which contain additional sources not present in the development or evaluation datasets simulated for the optimization of deep learning models,
 \item The 75 simulated scenes that are obtained from the same simulation process as both the development and evaluation dataset.
 \end{enumerate}
-Pleasantness predictions are obtained by substituting time of presence estimates computed from the presence detection architecture's outputs to the $\hat P_{\varphi 1}$ model presented in Section~\ref{sec:results_phys}. Thus, only the outputs corresponding to the presence of birds are used. The results are compared to estimates using ground truth $\hat T_s(\alpha, \beta)$ labels in Table~\ref{tab:pppred}. First, pleasantness estimations are equally effective using the model's predictions or the ground truth labels, with an RMSE of about 0.84 and 82\% of explained variance on the perceptual experiment corpus. This performance of the detection model is expected given the low errors on time of presence estimates. Labels from the detection model result in higher errors on the first sub-corpus containing recorded and replicated scenes, with sources not seen during training. In both cases the error is still lower on the first sub-corpus, indicating that the detection model generalizes well to new content and sources.\\
+Pleasantness predictions are obtained by substituting time of presence estimates computed from the presence detection architecture's outputs to the $\hat P_{\varphi 1}$ model presented in Section~\ref{sec:results_phys}. Thus, only the outputs corresponding to the presence of birds are used. The results are compared to estimates using ground truth $\hat T_s(\alpha, \beta)$ labels in Table~\ref{tab:pppred}. First, pleasantness estimations are equally effective using the model's predictions or the ground truth labels, with about 0.84 RMSE and 82\% of explained variance on the perceptual experiment corpus. This performance of the detection model is expected given the low errors on time of presence estimates. Labels from the detection model result in higher errors on the first sub-corpus containing recorded and replicated scenes, with sources not seen during training. In both cases the error is still lower on the first sub-corpus, indicating that the detection model generalizes well to new content and sources.\\
 
 \begin{table}[t]
 \centering
@@ -423,17 +449,17 @@ Pleasantness prediction using the detection model is as effective as the best ba
 \section{Discussion}
 \label{sec:discussion}
 
-The perceptual models of pleasantness are comparable to those proposed in~\cite{ricciardi2014} and~\cite{aumond2017}, of respective expressions (translated from 1-11 scales to 0-10):
+The perceptual models of pleasantness (eq.\ref{eq:pp1}-\ref{eq:pp2}) are comparable to those proposed in~\cite{ricciardi2014} and~\cite{aumond2017}, of respective expressions (translated from 1-11 scales to 0-10):
 \begin{align}
 \hat P_{p3} &= 7.11 - 0.38~OL - 0.15~T_{T, p} + 0.20~T_{V, p} + 0.15~T_{B, p}\\
 \hat P_{p4} &= 8.70 - 0.47~OL - 0.21~T_{T, p} + 0.12~T_{V, p} + 0.09~T_{B, p}
 \end{align}
 Several hypotheses can be drawn from this result. First, the use of a simulated corpus with low source complexity does not alter the fundamental relationships between perceptual quantities, nor does the \textit{ex situ} setting of the experiment. However, the latter may have an impact on the contribution of the overall loudness to pleasantness: the regression coefficient is $-0.67$, which is significantly higher than for \textit{in situ} models. This may be due to scenes at the same sound level appearing louder when played through headphones in a laboratory setting.\\
 
-The physical model on this corpus includes only the contribution of bird sources. This result is attributed to the overall low diversity of the studied corpus:
+The physical model on this corpus (eq.\ref{eq:pphi}) includes only the contribution of bird sources. This result is attributed to the overall low diversity of the studied corpus which gives more importance to this perceived dimension:
 \begin{itemize}
 \item Only traffic, voice and bird sources are present in simulated sound scenes, as a result global sound level measurements tend to be correlated with the presence of traffic in the simulation process. Quieter environments such as parks and quiet streets are less likely to have continuous traffic, while high sound levels in busy streets are always due to busy traffic. It is expected that including other sources such as construction noises and other transport-related contributions in such environments would lower the observed correlation.
-\item The diversity of available isolated source extracts for scene simulation is rather low. Particularly, voice events are recordings of read english with low variations in speaker and consistently neutral expressiveness. These properties result in no significant contribution of voice events to pleasantness for this corpus.
+\item The diversity of available isolated source extracts for scene simulation is rather low. Particularly, voice events are recordings of read english with low variations in speaker and consistently neutral expressiveness. These properties result in no significant correlation of indicators describing voice events to pleasantness for this corpus.
 \end{itemize}
 Thus, in real life scenarios where detection models are applied to sensor networks, indicators related to traffic and voice sources will become relevant for the prediction of pleasantness. The trained deep learning architecture already displays only few detection errors for these sources, and can be extended to any additional source provided enough data is available.\\
 
@@ -444,9 +470,9 @@ The detection-based pleasantness predictions are of lower quality on the corpus 
 \section{Conclusion}
 \label{sec:conclusion}
 
-A perceptual experiment was conducted that validates the use of corpora of simulated sound scenes in the context of perceptual characterization. Even with newly generated scenarios, a reduced source taxonomy does not significantly affect the relations between abstract or content-related subjective descriptors.\\
+A perceptual experiment was conducted that validates the use of corpora of simulated sound scenes in the context of perceptual soundscape characterization. Even with newly generated scenarios, a reduced source taxonomy does not significantly affect the relations between abstract or content-related subjective descriptors.\\
 
-Subsequently, a state-of-the-art deep learning architecture for source presence detection is developed that, when applied to pleasantness prediction from acoustic indicators in urban environments, leads to better estimates than previous state-of-the-art models.\\
+Subsequently, a deep learning architecture for source presence detection is developed that, when applied to pleasantness prediction from acoustic indicators in urban environments, compares to previous state-of-the-art models. Though, provided enough data the proposed protocol can be extended to a larger taxonomy to refine perceptual models, and included in a range of applications for soundscape characterization, categorization, or perceptual mapping.\\
 
 Future work will focus on the robustness of the source detection model, which heavily depends on the quantity and quality of data available for scene simulation. Together with additional recordings, data augmentation techniques for machine learning will be studied to diversify the training dataset by applying slight modifications to existing examples, such as filtering, pitch shifting or time stretching. Furthermore, this methodology can be adapted to specific environments by extending or refining the source taxonomy in both the scene simulation process and detection model. For example, additional transport-related sources such as train and plane activity could be introduced, and a difference could be made depending on voice expressivity or bird species.
 
