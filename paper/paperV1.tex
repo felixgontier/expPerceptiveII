@@ -30,15 +30,15 @@ $^3$ IFSTTAR, CEREMA, UMRAE, F-44344, Bouguenais, France
 
 
 \begin{abstract}
-Need for characterization of soundscape perception through objective descriptors, 
-Dependance on sources, level measurements insufficient
-sensor networks + deep learning
 
-For such purposes, a corpus of simulated sound scenes is proposed that allows the use of ground truth source contributions for the development of learning-based models. It includes semi-randomly generated original scenarios representative of the urban environment. This simulated corpus is shown through a listening experiment to yield similar perceptual responses compared to recorded sound scenes.
+Urban areas are often plagued with noise pollution. Even though a great deal of this pollution can be accounted by the sound volume, the literature shows that the recognition of sources also play a great role in the way humans are impacted.
 
-to predict the perceived source presence in 1~s time frames with labels obtained from 
+There is thus a need for characterizing urban acoustic environments not only with sound pressure measurements but also source-specific attributes such as the perceived time of presence. Combined, they allow us to predict more precisely high level concepts like the pleasantness. However, computationally predicting source-specific attributes from recordings of sensors is notably harder than computing sound pressure levels.
 
-This model is compared to both perceptual and physical baseline models obtained from the perceptual experiment's data in the context of pleasantness prediction
+This paper demonstrates, on a controlled dataset, that machine learning techniques based on state of the art neural architectures can predict the perceived time of presence of several sound sources with excellent performance, at a degree of precision that is sufficient for the task at hand: the prediction of the pleasantness.
+
+A corpus of simulated sound scenes is first proposed. This corpus is shown through a listening experiment to yield similar perceptual responses compared to recorded sound scenes. The availability of the contributions of the individual sound sources within the simulated sound scenes then allows us to train and validate the proposed estimation procedure.
+
 \end{abstract}
 
 
