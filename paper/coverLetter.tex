@@ -6,7 +6,7 @@
 
 \maketitle
 
-As a preamble, we would like to thank the editor and the reviewer for their comments and suggestions. Following these comments, we made several changes to the article including a modification of the structure of the document, which are summarized here. The next sections list our answers to each of the reviewer’s comments, with references to the revised manuscript (page, column, and paragraph) where appropriate.
+As a preamble, we would like to thank the editor and the reviewers for their comments and suggestions. Following these comments, we made several changes to the article including a modification of the structure of the document, which are summarized here. The next sections list our answers to each of the reviewer’s comments, with references to the revised manuscript (page, column, and paragraph) where appropriate.
 
 
 \section{Answers to Reviewer I}
@@ -15,17 +15,17 @@ As a preamble, we would like to thank the editor and the reviewer for their comm
 
 \item \emph{My biggest concern with this work is its generalization. By training on a dataset derived from only 19 recordings, and evaluating on only 6 recordings that weren't replicated in the synthetic data, it's unconvincing that this model would generalize to new data.}
 
-$\rightarrow$ Statistics used to simulate sound scenes are based on 74 recordings of which the 19 used for replication are a subset. Section 2.1 has been rewritten to describe more extensively this reference database. To generate more diverse scenarios the variance of all statistics is further increased. However, we acknowledge that the model needs to be evaluated on a more complete and representative set of recordings to assess fully its generalization capabilities.
+$\rightarrow$ Statistics used to simulate sound scenes are based on 74 recordings of which the 19 used for replication are a subset. Section 2.1 has been rewritten to describe more extensively this reference database. To generate more diverse scenarios the variance of all statistics is next further increased. However, we acknowledge that the model needs to be evaluated on a more complete and representative set of recordings to assess fully its generalization capabilities.
 
 \item \emph{It's even less convincing considering that in the final model, only the presence of birds was shown to be predictive of pleasantness, when in large cities like NYC, construction, loud music, dogs, and overnight delivery trucks are some of the most complained about sources of noise, none of which are even included in this model. Therefore, while I don't believe that the authors approaches and analyses are flawed, I think the datasets they are basing this research on are very limited and not representative of urban acoustics. [...]\\
 Section 4.2 - Seems pretty odd that only birds were used in the model, no?}
 
-$\rightarrow$ In this paper, we chose to focus on the three main categories of sources that are known to impact soundscape quality. When applying the proposed approach to a specific environment, the taxonomy of sound sources needs to be extended accordingly. This is now discussed in Section 5. Also, as is now emphasized in the Introduction and Section 2 the present study considers the point of view of pedestrians, which is vastly different from that of residents in terms of sources of interest.\\
-The quality of the pleasantness model obtained from time of presence approximations is bound by the listening test corpus, and thus mostly by the contents of simulated scenes. Section 4.1 discusses possible causes to the absence of other sources in the model. However, this model is not intended as a contribution but rather as a intermediary to show that presence predictions from the deep learning architecture are accurate enough to estimate more abstract perceptual notions.
+$\rightarrow$ In this paper, we chose to focus on the three main canonical categories of sources that are known to impact soundscape quality. When applying the proposed approach to a specific environment, the taxonomy of sound sources needs to be extended accordingly. This is now discussed in Section 5. Also, as now emphasized in the Introduction and Section 2, the present study considers the point of view of pedestrians, which is vastly different from that of residents in terms of sources of interest.\\
+The quality of the pleasantness model obtained from time of presence approximations is bound by the listening test corpus, and thus mostly by the contents of simulated scenes. Section 4.1 discusses possible causes to the absence of other sources in the model. However, this model is not intended as a contribution but rather as a mean to show that presence predictions from the deep learning architecture are accurate enough to estimate useful and more abstract perceptual indicators.
 
 \item \emph{Title - The perceived time of presence of sources is an intermediate goal, no? Much of this paper is focused on investigating pleasantness. Possibly change the title to match this goal}
 
-$\rightarrow$ The main objective of this work is the prediction of the perceived time of presence of sources of interest for the perceptual characterization of soundscapes. We study the estimation of pleasantness as an application, but the developped method could also be used to predict other quality descriptors or in mapping applications (eg.~\cite{lavandier2016}). The structure of the paper has been rearranged to emphasize this aim.
+$\rightarrow$ The main objective of this work is the prediction of the perceived time of presence of sources of interest for the perceptual characterization of soundscapes. We study the estimation of pleasantness as an application, but the developed method could also be used to predict other quality descriptors or in mapping applications (eg.~\cite{lavandier2016}). The structure of the paper has been rearranged to emphasize this aim.
 
 \item \emph{Section 2.1 - Each of the recordings from the 19 locations are 45 seconds long? Including the 6 recordings that weren't replicated? This could be made clearer.}
 
@@ -37,17 +37,11 @@ $\rightarrow$ These points are now more clearly explained in Section 2.4, which 
 
 \item \emph{Section 3.1 - Was there any overall background noise, e.g. brown noise or "urban rumble", added to the recordings to lower the SNR to something more realistic?}
 
-$\rightarrow$ In this study no background noise was added in a controlled manner. However, some background noise is present in the isolated samples used to simulate sound scenes. Particularly, each scene contains at least one background source for which recordings obtained on Freesound are used. These recordings were selected to be representative of the source but were not cleaned through pre-processing, leading to (uncontrolled) background noise being present to an extent in each simulated scene.
+$\rightarrow$ In this study no background noise was added in a controlled manner. However, some background noise is present in the isolated samples used to simulate sound scenes. Particularly, each scene contains at least one background source for which recordings obtained on Freesound are used. These recordings were selected to be representative of the source but were not cleaned through pre-processing, leading to (uncontrolled) background noise being present to some extent in each simulated scene.
 
 \item \emph{Section 3.2 - 125 ms is quite a large hop size. Since you are using synthetic data anyway (and thus are not very data limited), consider a smaller hop size, as is typical in most machine listening literature (e.g. 5 - 20 ms). Especially considering that you are detecting birds which are quite short sound events.}
 
-$\rightarrow$ This work is placed in the context of a monitoring application through sensor networks in urban areas, for which using features computed on fine time scales may not be viable in the long term due to storage and privacy concerns. Though information on smaller time scales would be more appropriate to detect sound events (from a few milliseconds for birds to tens of milliseconds for speech), this motivates our choice to operate on the third-octave spectrum with 125ms hop size, which is typical in monitoring studies. This is now discussed in the introduction.
-
-
-
-
-
-
+$\rightarrow$ Information on smaller time scales would indeed be more appropriate to detect sound events (from a few milliseconds for birds to tens of milliseconds for speech). Though, this work is placed in the context of a monitoring application through sensor networks in urban areas, for which using features computed on fine time scales may not be viable in the long term due to storage and privacy concerns. This motivates our choice to operate on the third-octave spectrum with 125ms hop size, which is typical in monitoring studies. This is now discussed in the introduction.
 
 \end{enumerate}
 
@@ -57,7 +51,7 @@ $\rightarrow$ This work is placed in the context of a monitoring application thr
 
 \item \emph{The abstract should be slightly revised; there is too much "background" info, while the reader might want to see already something about (quantifiable) results here.}
 
-$\rightarrow$ The abstract has been revised to reduce background information in favor of the description and results of the current study.
+$\rightarrow$ The abstract has been revised to reduce background information in favor of the description of the contributions and results of the current study.
 
 \item \emph{The first two paragraphs of the Intro might be re-thought, they are not very well connected and do not add much to the narrative to frame the issue under investigation. I would expect a more extensive literature review about sound sources recognition algorithms and auditory scenes characterization methods which is currently missing.}
 
@@ -65,7 +59,7 @@ $\rightarrow$ The introduction has been rewritten to better introduce the object
 
 \item \emph{The claim that the 45-second excerpt is perceptually relevant should be supported by some evidence/reference somehow.}
 
-$\rightarrow$ Many studies dealing with the environmental acoustic quality are associated with duration of acoustic measurements ranging from few seconds for the shorter~\cite{paulsen1997, brambilla2006} to fifteen minutes~\cite{kuwano1997, decoensel2007} and even to eighty minutes~\cite{namba1988}. Due to the limited duration of perceptual tests because of the fatigue, stimuli between 30s and 1mn are often prefered for laboratory tests.
+$\rightarrow$ Many studies dealing with the environmental acoustic quality are associated with duration of acoustic measurements ranging from few seconds for the shorter~\cite{paulsen1997, brambilla2006} to fifteen minutes~\cite{kuwano1997, decoensel2007} and even to eighty minutes~\cite{namba1988}. Due to the limited duration of perceptual tests because of the fatigue, stimuli between 30 seconds and 1 minute are often preferred for laboratory tests.
 
 \item \emph{The process of manual annotation of the excerpts should be described in more detail to make it replicable.}
 
@@ -93,7 +87,6 @@ $\rightarrow$ Section 5 now discusses the generalization and extension perspecti
 
 \end{enumerate}
 
-
 \section{Answers to Reviewer III}
 
 \begin{enumerate}
@@ -103,8 +96,8 @@ The arguments the authors present in the introduction for conducting this study 
 In general, I often find it hard to follow the presentation of the study and its results, and often get confused. Perhaps this is because there is no red thread in the story or no clear scientific question to answer. [...]\\
 Overall, for this article to be successful, the authors must agree on one clear scientific question and one clear message. Then they must write a clear story, guiding the reader to the conclusions. Remember to answer your question.}
 
-$\rightarrow$ The aim of this work is to determine wether a deep learning architecture can identify active sound sources in polyphonic urban sound environments from typical monitoring measurements (third-octave spectra). It is motivated by the fact that the composition of sound environments has a known influence on the perception of pedestrians, but is currently not explicitely studied in monitoring applications based on sensor networks. We achieve this goal by learning on labels approximating the perceived time of presence, which can be obtained in an automatic way if the ground truth source contributions in the training set is known. Pleasantess prediction is studied here as an application to assess the usefulness of the proposed approach.\\
-The structure of the manuscript has been revised to clearly expose the process of this work:
+$\rightarrow$ The aim of this work is to determine wether a deep learning architecture can identify active sound sources in polyphonic urban sound environments from typical monitoring measurements (third-octave spectra). It is motivated by the fact that the composition of sound environments has a known influence on the perception of pedestrians, but is currently not explicitly studied in monitoring applications based on sensor networks. We achieve this goal by learning on labels approximating the perceived time of presence, which can be obtained in an automatic way if the ground truth source contributions in the training set is known. Pleasantness prediction is studied here as an application to assess the usefulness of the proposed approach.\\
+The structure of the manuscript has been revised to clearly expose the contributions of this work:
 \begin{itemize}
 \item Section 2 details the deep learning dataset construction, its validation through a listening test and the choice of acoustic indicator for its automatic annotation,
 \item Section 3 presents the training and results of the source detection deep learning model,
@@ -115,11 +108,11 @@ The structure of the manuscript has been revised to clearly expose the process o
 \item \emph{At Inter-Noise in Hamburg in 2016 Lund\'en, Axelsson and Hurtig presented the results from a similar study, which seems to have been driven by the curiosity of learning whether machine learning is useful at all and what acoustical features would predict the outcome of soundscape assessments. This does not appear to be the motivation for the present study. Yet, the authors place a lot of energy on reporting on which regression model provides for the best predictions. Why is that?\\
 Scientifically, the most interesting question related to this study is: what acoustical properties would be most relevant to monitor in the future if we are to replace the current sound level approach with one that is more holistic? It seems that the authors have some insight into this. I recommend refocusing the article on this question. It would make the article a lot more worthwhile. Leave the potential practical applications of the results for the discussion, rather than trying to use them as a motivation for the study in the introduction.}
 
-$\rightarrow$ The original structure of the manuscript was misleadingly focused on pleasantness estimation, though it is in fact only an application of the proposed approach studied here to evaluate the quality of source presence predictions. As such, the motivation of this study is entirely on the identification of active components of the soundscape, which could have several fields of application from quality assessment to information-rich mapping. 
+$\rightarrow$ The original structure of the manuscript was misleadingly focused on pleasantness estimation, though it is in fact only an application of the proposed approach studied here to evaluate the quality of source presence predictions. As such, the motivation of this study is entirely on the identification of active components of the soundscape, which could have several fields of application from quality assessment to information-rich mapping.
 
 \item \emph{On Rows 39-40 in the introduction the authors claim that noise maps stipulated by the European Environmental Nose Directive (2002/49/EC; please correct the typo on Row 37) would provide "useful tools for urban planning and noise reduction purposes." I must say that urban planning is not at all on the EC agenda in this respect. The purpose of the noise maps is to provide intelligence for noise actions plans only. Urban planning would require a completely different approach than what the present noise abatement framework provides.}
 
-$\rightarrow$ The claim that the European Comission 2002/49/EC directive was aimed at urban planning has been removed from the introduction.
+$\rightarrow$ The claim that the European Commission 2002/49/EC directive was aimed at urban planning has been removed from the introduction.
 
 \item \emph{The quote related to ISO 12913-1 on Rows 43-45 is incorrect. Please correct.}
 
@@ -127,7 +120,7 @@ $\rightarrow$ Following the changes in the introduction structure, the quote rel
 
 \item \emph{In particular, it is hard to understand the presentation of figures, tables and equations. They must be more fully explained in the text.}
 
-$\rightarrow$ Figures, tables and equations are now more clearly explained in the text. 
+$\rightarrow$ Figures, tables and equations are now more clearly explained in the text.
 
 \item \emph{I recommend the authors to occasionally remind the reader about the meaning of the different abbreviations used. Now I must move back and forth in the text to try to remember what they mean, which causes me to lose track of where I am going. This makes it very hard to interpret and to understand the results. It is necessary to support the reader in understanding the text.}
 
@@ -135,15 +128,15 @@ $\rightarrow$ Several abbreviations have been removed or explained throughout th
 
 \item \emph{Also keep in mind that the reader may not be an engineer, physicist or mathematician and may not understand the equations. Please explain the equations in plain language, and help the reader to understand what they mean. For example, what does the second derivative of a function mean (velocity or acceleration)?}
 
-$\rightarrow$ Explications for the main equations in the manuscript have been added (eq. 1-3). Specifically, in eq. 1 the derivation is applied once on each dimension of the third-octave spectrum (hence the term second derivative), which underlines variations in time and frequency.
+$\rightarrow$ Explanations for the main equations in the manuscript have been added (eq. 1-3). Specifically, in eq. 1 the derivation is applied once on each dimension of the third-octave spectrum (hence the term second derivative), which underlines variations in time and frequency.
 
 \item \emph{I fail to understand how the different parts of the study relate to each other. How does the perception study relate to the machine learning part? Are they connected, or are they completely separate? I also got confused when I learned that there were some 400, or was it 200, simulated acoustic scenes used for machine learning, while there first were some 75 such scenes.}
 
-$\rightarrow$ The structure of the paper has been changed to better link different parts of the study. Section 2 presents the generation of a large simulated dataset with 400 sound scenes for training a source detection model and an additional (independant) 200 scenes for its evaluation. A third corpus containing 100 sound scenes including 75 simulated, 19 replicated and 6 recordrd, is constructed in Section 2.2 as part of a listening test to assess the change in perception in simulated scenes and to obtain subjective evaluations useful in the rest of the paper. In Section 2.3, the listening test results motivate the choice of indicator used to automatically annotate the perceived time of presence on the 600 total scenes used in the machine learning approach.
+$\rightarrow$ The structure of the paper has been changed to better link different parts of the study. Section 2 presents the generation of a large simulated dataset with 400 sound scenes for training a source detection model and an additional (independent) 200 scenes for its evaluation. A third corpus containing 100 sound scenes including 75 simulated, 19 replicated and 6 recorded, is constructed in Section 2.2 as part of a listening test to assess the change in perception in simulated scenes and to obtain subjective evaluations useful in the rest of the paper. In Section 2.3, the listening test results motivate the choice of the indicator used to automatically annotate the perceived time of presence on the 600 total scenes used in the machine learning approach.
 
 \item \emph{The Equations 5-11 must be explained in more detail. Please also inform the reader that you created multivariate linear regression models and how this was done. It was not until I saw the equations that I understood that they are regression models. This is not explained in the text. In general, you must present to the reader how statistical analyses are conducted and with what statistical package. At present, there is no such information in the text.}
 
-$\rightarrow$ Additional explications were added to equations 5-11 (now 5-8), and the procedure used to obtain baseline models from perceptual and acoustical parameters through multivariate linear regressions has been detailed in Section 4.1. All statistical analyses are conducted using Matlab and its statistical toolbox (code is available) and the machine learning part is implemented in the Pytorch framework. This is now stated where applicable.
+$\rightarrow$ Additional explications were added to equations 5-11 (now 5-8), and the procedure used to obtain baseline models from perceptual and acoustical parameters through multivariate linear regressions has been detailed in Section 4.1. All statistical analyses are conducted using Matlab and its statistical toolbox (code is made available on the companion website) and the machine learning part is implemented in the Pytorch framework (also available). This is now stated where applicable.
 
 \end{enumerate}
 
