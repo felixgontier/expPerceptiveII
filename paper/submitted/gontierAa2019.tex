@@ -15,7 +15,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{graphicx}
-\graphicspath{{figures/}{./}}
+\graphicspath{{../figures/}{./}}
 
 \makeatletter\@ifundefined{date}{}{\date{}}
 \makeatother
@@ -107,15 +107,15 @@ The 45~s sound scenes are then replicated using the  \textit{simScene} software,
     \centering
      \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{figures/tv_pres.eps}
+        \includegraphics[width=\textwidth]{tv_pres.eps}
     \end{subfigure}%
     \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{figures/tb_pres.eps}
+        \includegraphics[width=\textwidth]{tb_pres.eps}
     \end{subfigure}
     \begin{subfigure}[t]{0.33\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{figures/vb_pres.eps}
+        \includegraphics[width=\textwidth]{vb_pres.eps}
     \end{subfigure}
     \caption{Physical estimations~\cite{gontier2018} of the perceived time of presence of traffic, voices and birds sources for the corpus of simulated scenes with automatically generated scenarios.}\label{fig:tvb_pres}
 \end{figure*}
@@ -189,12 +189,12 @@ Discrepancies between projections of original and replicated scenes are highligh
 
 \begin{figure}[th]
     \centering
-    \includegraphics[width=0.8\columnwidth]{figures/pca_p1.eps}
+    \includegraphics[width=0.8\columnwidth]{pca_p1.eps}
     \caption{Biplot of the principal components analysis of average assessments for the 5 general questions on the 6 recorded and 19 replicated scenes (n=25). Arrows show discrepancies between corresponding recorded and replicated scenes. For the P1 recording location the standard deviation of the projection of individual responses is shown using ellipses.}\label{fig:pspace_rec}
 \end{figure}
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\columnwidth]{figures/pca_sim.eps}
+    \includegraphics[width=0.8\columnwidth]{pca_sim.eps}
     \caption{Biplot of the principal components analysis of average assessments for the 5 general questions on the 75 simulated scenes (n=75). Assessments of simulated scenes are projected as dots, and recorded and replicated scenes are projected as crosses.}\label{fig:pspace_sim}
 \end{figure}
 
@@ -262,7 +262,7 @@ where $s$ is the source, $y_s$ and $\hat y_s$ are the target and predicted prese
 
 \begin{figure}[t]
     \centering
-    \includegraphics[width=\columnwidth]{figures/deep_arch.pdf}
+    \includegraphics[width=\columnwidth]{deep_arch.pdf}
     \caption{Architecture of the deep learning model used for source presence prediction.}\label{fig:deep_arch}
 \end{figure}
 
